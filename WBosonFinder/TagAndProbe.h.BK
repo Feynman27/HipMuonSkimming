@@ -1,0 +1,38 @@
+#ifndef TagAndProbe_h
+#define TagAndProbe_h
+#include "BranchBase.h"
+#include <sstream>
+#include <string>
+#include "TH1F.h" 
+#include "TDirectory.h" 
+
+class TagAndProbe {
+    public:
+        TagAndProbe(BranchBase *bb=0, int nPtBins=0, int nEtaBins=0, int nCentBins=0, bool doMc=false);
+        ~TagAndProbe();
+        bool ActivateBranches(BranchBase* bb=0,int entry=-999);
+        void recIDEfficiency(BranchBase* bb, int ipt, int ieta, int icent, int icharge, double ptLow, double ptUpp, double etaLow, double etaUpp, double centLow, double centUpp);
+        void recMSEfficiency(BranchBase* bb,int ipt, int ieta, int icent, int icharge, double ptLow, double ptUpp, double etaLow, double etaUpp, double centLow, double centUpp);
+        void recEfficiency();
+        void trigEfficiency(BranchBase* bb,int ipt, int ieta, int icent, int icharge, double ptLow, double ptUpp, double etaLow, double etaUpp, double centLow, double centUpp);
+        void writeHistos(TFile* f=0);
+        void bookHistos();
+        void BinHistos(double ptBins[], double etaBins[]);
+    private:
+
+        int    m_nPtBins;
+        int    m_nEtaBins;
+        int    m_nCentBins;
+        bool   m_isPeriodA;
+        bool   m_isPeriodB;
+        TH1F* m_hMSProbePt;
+        TH1F* m_hMSProbePt_matched;
+        TH1F* m_hMSProbeEta;
+        TH1F* m_hMSProbeEta_matched;
+        std::vector<TH1F*> m_vHistMSProbePt; 
+        std::vector<TH1F*> m_vHistMSProbePt_matched; 
+        std::vector<TH1F*> m_vHistMSProbeEta; 
+        std::vector<TH1F*> m_vHistMSProbeEta_matched; 
+
+};
+#endif

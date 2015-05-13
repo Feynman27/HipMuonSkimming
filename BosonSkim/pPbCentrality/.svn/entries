@@ -1,0 +1,77 @@
+10
+
+dir
+600711
+svn+ssh://svn.cern.ch/reps/atlasoff/PhysicsAnalysis/HeavyIonPhys/pPbCentrality/trunk
+svn+ssh://svn.cern.ch/reps/atlasoff
+
+
+
+2013-04-05T16:07:20.388871Z
+543772
+angerami
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4525493e-7705-40b1-a816-d608a930855b
+
+pPbCentrality
+dir
+
+Root
+dir
+
+cmt
+dir
+
+src
+dir
+
+data
+dir
+
+README
+file
+
+
+
+
+2014-06-07T00:40:36.000000Z
+384279d6a40af19b25920571cd5f869d
+2013-01-22T19:12:01.632087Z
+534343
+angerami
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+557
+

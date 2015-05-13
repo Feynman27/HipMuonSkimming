@@ -1,0 +1,620 @@
+#!/bin/zsh
+##Choose period A or B
+PERIOD=$1
+
+mcname()
+{
+  MCNAME=$1
+  FileName=$2
+  #W-->munu MC
+  if [ "$MCNAME" = "Wminmunu_np.B" ]
+  then
+    File="mc12_5TeV.147737.PowhegPythia8_AU2CT10_Wminmunu_np.recon.NTUP_HI.e2583_d815_r5069/"
+  elif [ "$MCNAME" = "Wminmunu_pp.A" ] 
+  then
+    File="mc12_5TeV.147804.PowhegPythia8_AU2CT10_Wminmunu.recon.NTUP_HI.e2582_d814_r5069/"
+  elif [ "$MCNAME" = "Wminmunu_pp.B" ] 
+  then
+    File="mc12_5TeV.147804.PowhegPythia8_AU2CT10_Wminmunu.recon.NTUP_HI.e2583_d815_r5069/"
+  elif [ "$MCNAME" = "Wminmunu_pn.A" ] 
+  then
+    File="mc12_5TeV.147731.PowhegPythia8_AU2CT10_Wminmunu_pn.recon.NTUP_HI.e2582_d814_r5069/"
+  elif [ "$MCNAME" = "Wplusmunu_np.B" ] 
+  then
+    File="mc12_5TeV.147735.PowhegPythia8_AU2CT10_Wplusmunu_np.recon.NTUP_HI.e2583_d815_r5069/"
+  elif [ "$MCNAME" = "Wplusmunu_pp.B" ] 
+  then
+    File="mc12_5TeV.147801.PowhegPythia8_AU2CT10_Wplusmunu.recon.NTUP_HI.e2583_d815_r5069/"
+  elif [ "$MCNAME" = "Wplusmunu_pp.A" ] 
+  then
+    File="mc12_5TeV.147801.PowhegPythia8_AU2CT10_Wplusmunu.recon.NTUP_HI.e2582_d814_r5069/"
+  elif [ "$MCNAME" = "Wplusmunu_pn.A" ] 
+  then
+    File="mc12_5TeV.147729.PowhegPythia8_AU2CT10_Wplusmunu_pn.recon.NTUP_HI.e2582_d814_r5069/"
+  # Z-->mumu
+  elif [ "$MCNAME" = "Zmumu_np.B" ]
+  then
+    File="mc12_5TeV.147739.PowhegPythia8_AU2CT10_Zmumu_np.recon.NTUP_HI.e2213_d815_r5069/"
+  elif [ "$MCNAME" = "Zmumu_pp.A" ] 
+  then
+    File="mc12_5TeV.147807.PowhegPythia8_AU2CT10_Zmumu.recon.NTUP_HI.e2212_d814_r5069/"
+  elif [ "$MCNAME" = "Zmumu_pp.B" ] 
+  then
+    File="mc12_5TeV.147807.PowhegPythia8_AU2CT10_Zmumu.recon.NTUP_HI.e2213_d815_r5069/"
+  elif [ "$MCNAME" = "Zmumu_pn.A" ] 
+  then
+    File="mc12_5TeV.147733.PowhegPythia8_AU2CT10_Zmumu_pn.recon.NTUP_HI.e2212_d814_r5069/"
+  #Wtau-->tau-->munu MC
+  elif [ "$MCNAME" = "Wtauminmunu_np.B" ]
+  then
+    File="mc12_5TeV.209110.PowhegPythia8_AU2CT10_Wmintaunu_np_LeptonFilter.recon.NTUP_HI.e2583_d815_r5069/"
+  elif [ "$MCNAME" = "Wtauminmunu_pp.A" ] 
+  then
+    File="mc12_5TeV.209005.PowhegPythia8_AU2CT10_Wmintaunu_LeptonFilter.recon.NTUP_HI.e2582_d814_r5069/"
+  elif [ "$MCNAME" = "Wtauminmunu_pp.B" ] 
+  then
+    File="mc12_5TeV.209005.PowhegPythia8_AU2CT10_Wmintaunu_LeptonFilter.recon.NTUP_HI.e2583_d815_r5069/"
+  elif [ "$MCNAME" = "Wtauminmunu_pn.A" ] 
+  then
+    File="mc12_5TeV.209107.PowhegPythia8_AU2CT10_Wmintaunu_pn_LeptonFilter.recon.NTUP_HI.e2582_d814_r5069/"
+  elif [ "$MCNAME" = "Wtauplusmunu_np.B" ] 
+  then
+    File="mc12_5TeV.209109.PowhegPythia8_AU2CT10_Wplustaunu_np_LeptonFilter.recon.NTUP_HI.e2583_d815_r5069/"
+  elif [ "$MCNAME" = "Wtauplusmunu_pp.B" ] 
+  then
+    File="mc12_5TeV.209004.PowhegPythia8_AU2CT10_Wplustaunu_LeptonFilter.recon.NTUP_HI.e2583_d815_r5069/"
+  elif [ "$MCNAME" = "Wtauplusmunu_pp.A" ] 
+  then
+    File="mc12_5TeV.209004.PowhegPythia8_AU2CT10_Wplustaunu_LeptonFilter.recon.NTUP_HI.e2582_d814_r5069/"
+  elif [ "$MCNAME" = "Wtauplusmunu_pn.A" ] 
+  then
+    File="mc12_5TeV.209106.PowhegPythia8_AU2CT10_Wplustaunu_pn_LeptonFilter.recon.NTUP_HI.e2582_d814_r5069/"
+  # QCD 
+  elif [ "$MCNAME" = "J0B" ]
+  then
+    File="mc12_5TeV.147760.Pythia_AUET2BCTEQ6L1_jetjet_JZ0R04.recon.NTUP_HI.e2167_d815_r5069/"
+  elif [ "$MCNAME" = "J1B" ] 
+  then
+    File="mc12_5TeV.147761.Pythia_AUET2BCTEQ6L1_jetjet_JZ1R04.recon.NTUP_HI.e2167_d815_r5069/"
+  elif [ "$MCNAME" = "J2B" ]       
+  then
+    File="mc12_5TeV.147762.Pythia_AUET2BCTEQ6L1_jetjet_JZ2R04.recon.NTUP_HI.e2167_d815_r5069/"
+  elif [ "$MCNAME" = "J3B" ]       
+  then
+    File="mc12_5TeV.147763.Pythia_AUET2BCTEQ6L1_jetjet_JZ3R04.recon.NTUP_HI.e2167_d815_r5069/"
+  elif [ "$MCNAME" = "J4B" ]       
+  then
+    File="mc12_5TeV.147764.Pythia_AUET2BCTEQ6L1_jetjet_JZ4R04.recon.NTUP_HI.e2167_d815_r5069/"
+  elif [ "$MCNAME" = "J0A" ]
+  then
+    File="mc12_5TeV.147760.Pythia_AUET2BCTEQ6L1_jetjet_JZ0R04.recon.NTUP_HI.e2166_d814_r5069/"
+  elif [ "$MCNAME" = "J1A" ] 
+  then
+    File="mc12_5TeV.147761.Pythia_AUET2BCTEQ6L1_jetjet_JZ1R04.recon.NTUP_HI.e2166_d814_r5069/"
+  elif [ "$MCNAME" = "J2A" ]       
+  then
+    File="mc12_5TeV.147762.Pythia_AUET2BCTEQ6L1_jetjet_JZ2R04.recon.NTUP_HI.e2166_d814_r5069/"
+  elif [ "$MCNAME" = "J3A" ]       
+  then
+    File="mc12_5TeV.147763.Pythia_AUET2BCTEQ6L1_jetjet_JZ3R04.recon.NTUP_HI.e2166_d814_r5069/"
+  elif [ "$MCNAME" = "J4A" ]       
+  then
+    File="mc12_5TeV.147764.Pythia_AUET2BCTEQ6L1_jetjet_JZ4R04.recon.NTUP_HI.e2166_d814_r5069/"
+  else
+    echo "ERROR: Cannot locate input file."
+  fi
+  echo "    --inDS $File \\">> $FileName
+  echo "dq2-ls $File ">> check.sh
+}
+
+runname()
+{
+  RUNNUMBER=$1
+  FileName=$2
+
+  #PeriodA (BeamA=p, BeamB=Pb)
+  if [ $RUNNUMBER -eq 217999 ]
+  then
+    File="data13_hip.00217999.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218006 ] 
+  then
+    File="data13_hip.00218006.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218024 ] 
+  then
+    File="data13_hip.00218024.physics_HardProbes.merge.NTUP_HI.o10_f523_m1312"
+  elif [ $RUNNUMBER -eq 218048 ] 
+  then
+    File="data13_hip.00218048.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218118 ] 
+  then
+    File="data13_hip.00218118.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218168 ] 
+  then
+    File="data13_hip.00218168.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218179 ] 
+  then
+    File="data13_hip.00218179.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218197 ] 
+  then
+    File="data13_hip.00218197.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218213 ] 
+  then
+    File="data13_hip.00218213.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218222 ] 
+  then
+    File="data13_hip.00218222.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218301 ] 
+  then
+    File="data13_hip.00218301.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218338 ]
+  then
+    File="data13_hip.00218338.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218391 ]
+  then
+    File="data13_hip.00218391.physics_HardProbes.merge.NTUP_HI.f514_m1312"
+  elif [ $RUNNUMBER -eq 218436 ]
+  then
+    File="data13_hip.00218436.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 218473 ]
+  then
+    File="data13_hip.00218473.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 218589 ]
+  then
+    File="data13_hip.00218589.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+
+  #PeriodB (BeamA=Pb, BeamB=p)
+  elif [ $RUNNUMBER -eq 218677 ]
+  then
+    File="data13_hip.00218677.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 218679 ]
+  then
+    File="data13_hip.00218679.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 218716 ]
+  then
+    File="data13_hip.00218716.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 218751 ]
+  then
+    File="data13_hip.00218751.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 218771 ]
+  then
+    File="data13_hip.00218771.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 218783 ]
+  then
+    File="data13_hip.00218783.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 218829 ]
+  then
+    File="data13_hip.00218829.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 218898 ]
+  then
+    File="data13_hip.00218898.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 218940 ]
+  then
+    File="data13_hip.00218940.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 218968 ]
+  then
+    File="data13_hip.00218968.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 219001 ]
+  then
+    File="data13_hip.00219001.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 219028 ]
+  then
+    File="data13_hip.00219028.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 219055 ]
+  then
+    File="data13_hip.00219055.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 219089 ]
+  then
+    File="data13_hip.00219089.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 219111 ]
+  then
+    File="data13_hip.00219111.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  elif [ $RUNNUMBER -eq 219114 ]
+  then
+    File="data13_hip.00219114.physics_HardProbes.merge.NTUP_HI.f516_m1312"
+  fi
+  echo " --inDS $File \\">> $FileName
+  echo "dq2-ls $File ">> check.sh
+}
+
+if [ "$PERIOD" = "A" ] 
+then 
+echo "---> PERIOD A <---"
+Filename=SubmitHiPMuonD3PDHardProbesPeriodA.sh
+spreadSheetName=HiPMuonD3PDHardProbesPeriodA.csv
+
+if [ -e $Filename ]
+then
+  rm $Filename
+fi
+
+if [ -e $spreadSheetName ]
+then
+  rm $spreadSheetName
+fi
+
+if [ -e dq_get_all_PeriodA.sh ]
+then
+  rm dq_get_all_PeriodA.sh
+fi
+
+if [ -e check_site.sh  ]
+then
+  rm check_site.sh
+fi
+
+if [ -e check.sh  ]
+then
+  rm check.sh
+fi
+
+aa="my"$1
+if test $aa = "myclean"
+then
+  exit 0
+fi
+
+today=`date +%Y.%m.%d.`
+prefix="user.tbalestr.HiPMuonHardProbes.PeriodA.D3PD."
+#trigger="triggerEfficiency."
+#OUTDS=$prefix$today$trigger"v01."
+OUTDS=$prefix$today"v01."
+RUNNO=1
+for RUNA in 217999 218006 218024 218048 218118 218168 218179 218197 218213 218222 218301 218338 218391 218436 218473 218589   
+#for RUNA in 217999
+do
+
+  echo $RUNNO "  " $RUNA
+  RUNNO=`expr $RUNNO + 1`
+
+  echo "prun --exec \"echo %IN > input.txt; ./SkimMain.exe DATA \"  \\" >>$Filename
+  echo "    --outputs skimmed.root \\" >>$Filename
+  echo "    --athenaTag 20.1.4 \\">>$Filename
+  echo "    --cmtConfig x86_64-slc6-gcc48-opt \\">>$Filename
+  echo "    --match '*NTUP*' \\">>$Filename
+  runname $RUNA $Filename
+  echo "    --outDS $OUTDS$RUNA \\">>$Filename
+  echo "    --excludeFile skimmed.root,check.sh,*.o,*.h,*.C $Filename \\">>$Filename
+  echo "    --extFile SkimMain.exe,input.txt,pPbMinBiasUtil_config_v1.root,Dict.cxx \\">>$Filename
+  echo "    --noBuild \\">>$Filename
+  #echo "    --nGBPerJob 15 \\">>$Filename
+  echo "    --nGBPerJob 10 \\">>$Filename
+#  echo "    --nFilesPerJob 15 \\">>$Filename
+#  echo "    --mergeOutput">>$Filename
+  echo "echo \"$RUNA : \$? \" >>Log.txt">>$Filename
+  echo "echo">>$Filename
+  echo -e "\n\n">>$Filename
+
+  echo "dq2-get -f \"*root*\" $OUTDS$RUNA/" >>dq_get_all_PeriodA.sh
+  echo "$OUTDS$RUNA/,">>$spreadSheetName
+
+done
+elif [ "$PERIOD" = "B" ]
+then 
+echo "---> PERIOD B <---"
+Filename=SubmitHiPMuonD3PDHardProbesPeriodB.sh
+spreadSheetName=HiPMuonD3PDHardProbesPeriodB.csv
+
+if [ -e $Filename ]
+then
+  rm $Filename
+fi
+
+if [ -e $spreadSheetName ]
+then
+  rm $spreadSheetName
+fi
+
+if [ -e dq_get_all_PeriodB.sh ]
+then
+  rm dq_get_all_PeriodB.sh
+fi
+
+if [ -e check_site.sh  ]
+then
+  rm check_site.sh
+fi
+
+if [ -e check.sh  ]
+then
+  rm check.sh
+fi
+
+aa="my"$1
+if test $aa = "myclean"
+then
+  exit 0
+fi
+
+today=`date +%Y.%m.%d.`
+prefix="user.tbalestr.HiPMuonHardProbes.PeriodB.D3PD."
+OUTDS=$prefix$today"v01."
+RUNNO=1
+for RUNB in 218677 218679 218716 218751 218771 218783 218829 218898 218940 218968 219001 219028 219055 219089 219111 219114      
+do
+
+  echo $RUNNO "  " $RUNB
+  RUNNO=`expr $RUNNO + 1`
+
+  echo "prun --exec \"echo %IN > input.txt; ./SkimMain.exe DATA \"  \\" >>$Filename
+  echo "    --outputs skimmed.root \\" >>$Filename
+  echo "    --athenaTag 20.1.4 \\">>$Filename
+  echo "    --cmtConfig x86_64-slc6-gcc48-opt \\">>$Filename
+  echo "    --match '*NTUP*' \\">>$Filename
+  runname $RUNB $Filename
+  echo "    --outDS $OUTDS$RUNB \\">>$Filename
+  echo "    --excludeFile skimmed.root,check.sh,*.o,*.h,*.C $Filename \\">>$Filename
+  echo "    --extFile SkimMain.exe,input.txt,pPbMinBiasUtil_config_v1.root,Dict.cxx \\">>$Filename
+  echo "    --noBuild \\">>$Filename
+  echo "    --nGBPerJob 10 \\">>$Filename
+  echo "echo \"$RUNB : \$? \" >>Log.txt">>$Filename
+  echo "echo">>$Filename
+  echo -e "\n\n">>$Filename
+
+  echo "dq2-get -f \"*root*\" $OUTDS$RUNB/" >>dq_get_all_PeriodB.sh
+  echo "$OUTDS$RUNB/,">>$spreadSheetName
+
+done
+elif [ "$PERIOD" = "W" ]
+then 
+echo "--- W-->munu ---"
+Filename=SubmitHiPMuonD3PDWmunu.sh
+spreadSheetName=HiPMuonD3PDWmunu.csv
+
+if [ -e $Filename ]
+then
+  rm $Filename
+fi
+
+if [ -e $spreadSheetName ]
+then
+  rm $spreadSheetName
+fi
+
+if [ -e dq_get_all_Wmunu.sh ]
+then
+  rm dq_get_all_Wmunu.sh
+fi
+
+if [ -e check_site.sh  ]
+then
+  rm check_site.sh
+fi
+
+if [ -e check.sh  ]
+then
+  rm check.sh
+fi
+
+aa="my"$1
+if test $aa = "myclean"
+then
+  exit 0
+fi
+
+today=`date +%Y.%m.%d.`
+prefix="user.tbalestr.PowhegPythia8_AU2CT10.D3PD."
+OUTDS=$prefix$today"v01."
+RUNNO=1
+for RUNW in "Wminmunu_np.B" "Wminmunu_pp.A" "Wminmunu_pp.B" "Wminmunu_pn.A" "Wplusmunu_np.B" "Wplusmunu_pp.A" "Wplusmunu_pp.B" "Wplusmunu_pn.A"   
+do
+
+  echo $RUNNO "  " $RUNW
+  RUNNO=`expr $RUNNO + 1`
+
+  echo "prun --exec \"echo %IN > input.txt; ./SkimMain.exe W \"  \\" >>$Filename
+  echo "    --outputs skimmed.root \\" >>$Filename
+  echo "    --athenaTag 20.1.4 \\">>$Filename
+  echo "    --match '*NTUP*' \\">>$Filename
+  mcname $RUNW $Filename
+  echo "    --outDS $OUTDS$RUNW \\">>$Filename
+  echo "    --excludeFile skimmed.root,check.sh,*.o,*.h,*.C $Filename \\">>$Filename
+  echo "    --extFile SkimMain.exe,input.txt,pPbMinBiasUtil_config_v1.root,Dict.cxx \\">>$Filename
+  echo "    --noBuild \\">>$Filename
+  echo "    --nGBPerJob 10 \\">>$Filename
+  echo "echo \"$RUNW : \$? \" >>Log.txt">>$Filename
+  echo "echo">>$Filename
+  echo -e "\n\n">>$Filename
+
+  echo "dq2-get -f \"*root*\" $OUTDS$RUNW/" >>dq_get_all_Wmunu.sh
+  echo "$OUTDS$RUNW/,">>$spreadSheetName
+
+done
+
+elif [ "$PERIOD" = "Z" ]
+then 
+echo "--- Z-->mumu ---"
+Filename=SubmitHiPMuonD3PDZmumu.sh
+spreadSheetName=HiPMuonD3PDZmumu.csv
+
+if [ -e $Filename ]
+then
+  rm $Filename
+fi
+
+if [ -e $spreadSheetName ]
+then
+  rm $spreadSheetName
+fi
+
+if [ -e dq_get_all_Zmumu.sh ]
+then
+  rm dq_get_all_Zmumu.sh
+fi
+
+if [ -e check_site.sh  ]
+then
+  rm check_site.sh
+fi
+
+if [ -e check.sh  ]
+then
+  rm check.sh
+fi
+
+aa="my"$1
+if test $aa = "myclean"
+then
+  exit 0
+fi
+
+today=`date +%Y.%m.%d.`
+prefix="user.tbalestr.PowhegPythia8_AU2CT10.D3PD."
+OUTDS=$prefix$today"v01."
+RUNNO=1
+for RUNZ in "Zmumu_np.B" "Zmumu_pp.A" "Zmumu_pp.B" "Zmumu_pn.A"  
+do
+
+  echo $RUNNO "  " $RUNZ
+  RUNNO=`expr $RUNNO + 1`
+
+  echo "prun --exec \"echo %IN > input.txt; ./SkimMain.exe Z \"  \\" >>$Filename
+  echo "    --outputs skimmed.root \\" >>$Filename
+  echo "    --athenaTag 20.1.0 \\">>$Filename
+  echo "    --match '*NTUP*' \\">>$Filename
+  mcname $RUNZ $Filename
+  echo "    --outDS $OUTDS$RUNZ \\">>$Filename
+  echo "    --excludeFile skimmed.root,check.sh,*.o,*.h,*.C $Filename \\">>$Filename
+  echo "    --extFile SkimMain.exe,input.txt,pPbMinBiasUtil_config_v1.root,Dict.cxx \\">>$Filename
+  echo "    --noBuild \\">>$Filename
+  echo "    --nGBPerJob 10 \\">>$Filename
+  echo "echo \"$RUNZ : \$? \" >>Log.txt">>$Filename
+  echo "echo">>$Filename
+  echo -e "\n\n">>$Filename
+
+  echo "dq2-get -f \"*root*\" $OUTDS$RUNZ/" >>dq_get_all_Zmumu.sh
+  echo "$OUTDS$RUNZ/,">>$spreadSheetName
+
+done
+
+elif [ "$PERIOD" = "Wtau" ]
+then 
+echo "--- Wtau-->mununu ---"
+Filename=SubmitHiPMuonD3PDWtaumu.sh
+spreadSheetName=HiPMuonD3PDWtaumu.csv
+
+if [ -e $Filename ]
+then
+  rm $Filename
+fi
+
+if [ -e $spreadSheetName ]
+then
+  rm $spreadSheetName
+fi
+
+if [ -e dq_get_all_Wtaumu.sh ]
+then
+  rm dq_get_all_Wtaumu.sh
+fi
+
+if [ -e check_site.sh  ]
+then
+  rm check_site.sh
+fi
+
+if [ -e check.sh  ]
+then
+  rm check.sh
+fi
+
+aa="my"$1
+if test $aa = "myclean"
+then
+  exit 0
+fi
+
+today=`date +%Y.%m.%d.`
+prefix="user.tbalestr.PowhegPythia8_AU2CT10.D3PD."
+OUTDS=$prefix$today"v01."
+RUNNO=1
+for RUNWtau in "Wtauminmunu_np.B" "Wtauminmunu_pp.A" "Wtauminmunu_pp.B" "Wtauminmunu_pn.A" "Wtauplusmunu_np.B" "Wtauplusmunu_pp.A" "Wtauplusmunu_pp.B" "Wtauplusmunu_pn.A"   
+do
+
+  echo $RUNNO "  " $RUNWtau
+  RUNNO=`expr $RUNNO + 1`
+
+  echo "prun --exec \"echo %IN > input.txt; ./SkimMain.exe TAU \"  \\" >>$Filename
+  echo "    --outputs skimmed.root \\" >>$Filename
+  echo "    --athenaTag 20.1.0 \\">>$Filename
+  echo "    --match '*NTUP*' \\">>$Filename
+  mcname $RUNWtau $Filename
+  echo "    --outDS $OUTDS$RUNWtau \\">>$Filename
+  echo "    --excludeFile skimmed.root,check.sh,*.o,*.h,*.C $Filename \\">>$Filename
+  echo "    --extFile SkimMain.exe,input.txt,pPbMinBiasUtil_config_v1.root,Dict.cxx \\">>$Filename
+  echo "    --noBuild \\">>$Filename
+  echo "    --nGBPerJob 10 \\">>$Filename
+  echo "echo \"$RUNWtau : \$? \" >>Log.txt">>$Filename
+  echo "echo">>$Filename
+  echo -e "\n\n">>$Filename
+
+  echo "dq2-get -f \"*root*\" $OUTDS$RUNWtau/" >>dq_get_all_Wtaumu.sh
+  echo "$OUTDS$RUNWtau/,">>$spreadSheetName
+
+done
+
+elif [ "$PERIOD" = "QCD" ]
+then 
+echo "--- QCD ---"
+Filename=SubmitHiPMuonD3PDQCDmu.sh
+spreadSheetName=HiPMuonD3PDQCDmu.csv
+
+if [ -e $Filename ]
+then
+  rm $Filename
+fi
+
+if [ -e $spreadSheetName ]
+then
+  rm $spreadSheetName
+fi
+
+if [ -e dq_get_all_QCDmu.sh ]
+then
+  rm dq_get_all_QCDmu.sh
+fi
+
+if [ -e check_site.sh  ]
+then
+  rm check_site.sh
+fi
+
+if [ -e check.sh  ]
+then
+  rm check.sh
+fi
+
+aa="my"$1
+if test $aa = "myclean"
+then
+  exit 0
+fi
+
+today=`date +%Y.%m.%d.`
+prefix="user.tbalestr.Pythia_AUET2BCTEQ6L1_jetjet.D3PD."
+OUTDS=$prefix$today"v01."
+RUNNO=1
+for RUNQCD in "J0A" "J1A" "J2A" "J3A" "J4A" "J0B" "J1B" "J2B" "J3B" "J4B"   
+do
+
+  echo $RUNNO "  " $RUNQCD
+  RUNNO=`expr $RUNNO + 1`
+
+  echo "prun --exec \"echo %IN > input.txt; ./SkimMain.exe QCD \"  \\" >>$Filename
+  echo "    --outputs skimmed.root \\" >>$Filename
+  echo "    --athenaTag 20.1.0 \\">>$Filename
+  echo "    --match '*NTUP*' \\">>$Filename
+  mcname $RUNQCD $Filename
+  echo "    --outDS $OUTDS$RUNQCD \\">>$Filename
+  echo "    --excludeFile skimmed.root,check.sh,*.o,*.h,*.C $Filename \\">>$Filename
+  echo "    --extFile SkimMain.exe,input.txt,pPbMinBiasUtil_config_v1.root,Dict.cxx \\">>$Filename
+  echo "    --noBuild \\">>$Filename
+  echo "    --nGBPerJob 10 \\">>$Filename
+  echo "echo \"$RUNQCD : \$? \" >>Log.txt">>$Filename
+  echo "echo">>$Filename
+  echo -e "\n\n">>$Filename
+
+  echo "dq2-get -f \"*root*\" $OUTDS$RUNQCD/" >>dq_get_all_QCDmu.sh
+  echo "$OUTDS$RUNQCD/,">>$spreadSheetName
+
+done
+fi

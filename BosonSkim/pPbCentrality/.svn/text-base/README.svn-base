@@ -1,0 +1,10 @@
+Package contains code for pPb-specific event selection and centrality determination.
+
+data directory contains GRLs and centrality cuts.
+Event selection and centrality cuts are documented here:
+https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/HeavyIonAnalysis2012
+The GRL is taken from here:
+https://twiki.cern.ch/twiki/bin/viewauth/Atlas/HeavyIonRunList#XML_file
+
+For 2013 pPb run no official GRL yet exists. Unofficial grls generated from run query are included
+but please see comments in xml file and use all GRLs named UNOFFICIAL at your own risk.

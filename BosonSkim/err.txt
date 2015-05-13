@@ -1,0 +1,56 @@
+======> Running on Monte Carlo simulation. <======
+1 files used for processing.
+open /usatlas/u/tbales/scratch/mc12_5TeV.147729.PowhegPythia8_AU2CT10_Wplusmunu_pn.recon.NTUP_HI.e2582_d814_r5069_tid01397074_00/*
+entries=783
+[HeavyIonD3PD::HeavyIonD3PD] ctor
+[HeavyIonD3PD::HeavyIonD3PD] Monte Carlo Sample
+[HeavyIonD3PD::HeavyIonD3PD] Turning on and initializing input D3PD branches.
+[pPbMinBiasUtil::Configure] total hot regions : 1 , latest has layer / etabin / phibin = 1 / 48 / 29
+[pPbMinBiasUtil::Configure] total hot regions : 2 , latest has layer / etabin / phibin = 1 / 57 / 5
+[pPbMinBiasUtil::Configure] total hot regions : 3 , latest has layer / etabin / phibin = 1 / 48 / 6
+[pPbMinBiasUtil::Configure] total hot regions : 4 , latest has layer / etabin / phibin = 2 / 35 / 17
+[pPbMinBiasUtil::Configure] total hot regions : 5 , latest has layer / etabin / phibin = 2 / 44 / 45
+[pPbMinBiasUtil::Configure] total hot regions : 6 , latest has layer / etabin / phibin = 2 / 44 / 46
+[pPbMinBiasUtil::Configure] total hot regions : 7 , latest has layer / etabin / phibin = 1 / 48 / 7
+[pPbMinBiasUtil::Configure] total hot regions : 8 , latest has layer / etabin / phibin = 1 / 48 / 5
+[pPbMinBiasUtil::Configure] total hot regions : 9 , latest has layer / etabin / phibin = 2 / 45 / 45
+[pPbMinBiasUtil::Configure] total hot regions : 10 , latest has layer / etabin / phibin = 5 / 72 / 12
+[pPbMinBiasUtil::Configure] total hot regions : 11 , latest has layer / etabin / phibin = 8 / 17 / 6
+[pPbMinBiasUtil::Configure] total hot regions : 12 , latest has layer / etabin / phibin = 8 / 17 / 7
+[pPbMinBiasUtil::Configure] total hot regions : 13 , latest has layer / etabin / phibin = 9 / 32 / 55
+[pPbMinBiasUtil::Configure] total hot regions : 14 , latest has layer / etabin / phibin = 9 / 32 / 53
+[pPbMinBiasUtil::Configure] total hot regions : 15 , latest has layer / etabin / phibin = 9 / 33 / 40
+[pPbMinBiasUtil::Configure] total hot regions : 16 , latest has layer / etabin / phibin = 15 / 38 / 53
+[pPbMinBiasUtil::Configure] EMB cellsig threshold set to 5
+[pPbMinBiasUtil::Configure] EME cellsig threshold set to 4.8
+[pPbMinBiasUtil::Configure] HEC cellsig threshold set to 4.6
+[pPbMinBiasUtil::Configure] Tile cellsig threshold set to 5.4
+[pPbMinBiasUtil::Configure] FCAL cellsig threshold set to 4.4
+[pPbMinBiasUtil::Configure] vtx-dependent scale correction for FCal A: 0.000105325
+[pPbMinBiasUtil::Configure] vtx-dependent scale correction for FCal C: -0.000112992
+[pPbMinBiasUtil::Configure] FCal C --> FCal A energy scale correction factor: 0.983
+[EventAnalysis::EventAnalysis] ctor
+[EventAnalysis::EventAnalysis] Setting output branches.
+[MuonAnalysis::MuonAnalysis] ctor
+[MuonAnalysis::MuonAnalysis] Monte Carlo Sample. 
+[MuonAnalysis::MuonAnalysis] Running on mu muons.
+[TruthAnalysis::TruthAnalysis] ctor
+ Event no: 0
+[pPbMinBiasUtil::Configure] run #218213 has p+Pb (period A / pilot) orientation
+[pPbMinBiasUtil::CalibrateRun] found FCal A pedestal for run #218213 : 0.344443 GeV
+[pPbMinBiasUtil::CalibrateRun] found FCal C pedestal for run #218213 : 0.302263 GeV
+[MuonAnalysis::recIDProbes] Probe found.
+[MuonAnalysis::recIDProbes] Probe found.
+[pPbMinBiasUtil::Configure] run #217999 has p+Pb (period A / pilot) orientation
+[pPbMinBiasUtil::CalibrateRun] found FCal A pedestal for run #217999 : 0.360592 GeV
+[pPbMinBiasUtil::CalibrateRun] found FCal C pedestal for run #217999 : 0.281696 GeV
+[MuonAnalysis::recIDProbes] Probe found.
+[MuonAnalysis::recIDProbes] Probe found.
+[MuonAnalysis::recIDProbes] Probe found.
+[MuonAnalysis::recIDProbes] Probe found.
+[pPbMinBiasUtil::Configure] run #218213 has p+Pb (period A / pilot) orientation
+[pPbMinBiasUtil::CalibrateRun] found FCal A pedestal for run #218213 : 0.344443 GeV
+[pPbMinBiasUtil::CalibrateRun] found FCal C pedestal for run #218213 : 0.302263 GeV
+Total number of good "mu" muons: 649
+[EventAnalysis::EventAnalysis] dtor
+[MuonAnalysis::MuonAnalysis] Dtor: Clean up.

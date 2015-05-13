@@ -1,0 +1,185 @@
+#include "TagAndProbe.h"
+
+
+TagAndProbe::TagAndProbe(BranchBase* bb, int nPtBins, int nEtaBins, int nCentBins, bool doMc): m_nPtBins(nPtBins), m_nEtaBins(nEtaBins), m_nCentBins(nCentBins),
+                            m_isPeriodA(false), m_isPeriodB(false){
+    
+    std::cout << "[TagAndProbe::TagAndProbe] Starting Tag and Probe analysis." << std::endl;
+    std::cout << "[TagAndProbe::TagAndProbe] Booking histograms with " << m_nPtBins << " pt bins : " 
+        << m_nEtaBins << " eta bins : " << m_nCentBins << " centrality bins." << std::endl;
+
+    for(int ipt=0; ipt<m_nPtBins; ++ipt){
+
+        for(int ieta=0; ieta<m_nEtaBins; ++ieta){
+
+            for(int icent=0; icent<m_nCentBins; ++icent){
+
+                std::stringstream names;
+                names << "pt" << ipt << "_eta" << ieta << "_centrality" << icent;
+                m_hMSProbePt = new TH1F(std::string("hMSProbePt_"+names.str()).c_str(),std::string("hMSProbePt_"+names.str()).c_str(),300,0.0,300.0);
+                m_hMSProbeEta = new TH1F(std::string("hMSProbeEta_"+names.str()).c_str(),std::string("hMSProbeEta_"+names.str()).c_str(),11,-2.5,2.5);
+                //m_hMSProbeMuu = new TH1F(std::string("hMSProbeMuu_"+names.str()).c_str(),std::string("hMSProbeMuu_"+names.str()).c_str(),70,50.,120.);
+
+                m_hMSProbePt = new TH1F(std::string("hMSProbePt_matched_"+names.str()).c_str(),std::string("hMSProbePt_matched_"+names.str()).c_str(),300,0.0,300.0);
+                m_hMSProbeEta = new TH1F(std::string("hMSProbeEta_matched_"+names.str()).c_str(),std::string("hMSProbeEta_matched_"+names.str()).c_str(),11,-2.5,2.5);
+                //m_hMSProbeMuu = new TH1F(std::string("hMSProbeMuu_matched_"+names.str()).c_str(),std::string("hMSProbeMuu_matched_"+names.str()).c_str(),70,50.,120.);
+            }//icent
+        }//ieta
+    }//ipt
+
+}
+
+void TagAndProbe::BinHistos(double ptBins[], double etaBins[]){
+
+/*    if( ( (sizeof(ptBins)/sizeof(double)-1) != m_nPtBins) ||
+           ( (sizeof(etaBins)/sizeof(double)-1) != m_nEtaBins) ){
+        std::cout << "[TagAndProbe::BinHistos] WARNING: Bin mismatch." << std::endl;
+        std::cout << " PT: " << sizeof(ptBins)/sizeof(double)-1 << " =? " << m_nPtBins <<std::endl;
+        std::cout << " ETA: " << sizeof(etaBins)/sizeof(double)-1 << " =? " << m_nEtaBins <<std::endl;
+    }
+*/
+    for(int ipt=0; ipt<m_nPtBins; ++ipt){
+        for(int ieta=0; ieta<m_nEtaBins; ++ieta){
+            for(int icent=0; icent<m_nCentBins; ++icent){
+
+                std::stringstream currentBin;
+                currentBin << "pt" << ipt << "_eta" << ieta << "_centrality" << icent;
+                m_hMSProbePt =  (TH1F*)gDirectory->Get(std::string("hMSProbePt_" +currentBin.str()).c_str());
+                m_hMSProbeEta = (TH1F*)gDirectory->Get(std::string("hMSProbeEta_"+currentBin.str()).c_str());
+                m_hMSProbePt_matched  =  (TH1F*)gDirectory->Get(std::string("hMSProbePt_matched_"+currentBin.str()).c_str());
+                m_hMSProbeEta_matched =  (TH1F*)gDirectory->Get(std::string("hMSProbeEta_matched_"+currentBin.str()).c_str());
+                
+                m_hMSProbePt->Rebin(m_nPtBins,"",ptBins);
+                m_hMSProbePt_matched->Rebin(m_nPtBins,"",ptBins);
+                m_hMSProbeEta->Rebin(m_nEtaBins,"",etaBins);
+                m_hMSProbeEta_matched->Rebin(m_nEtaBins,"",etaBins);
+
+            }//icent
+        }//ieta
+    }//ipt
+}
+
+TagAndProbe::~TagAndProbe(){
+
+    std::cout << "[TagAndProbe::~TagAndProbe] D'tor. " << std::endl;
+    for(unsigned int i=0; i<m_vHistMSProbePt.size(); ++i){
+        delete m_vHistMSProbePt[i];
+        delete m_vHistMSProbeEta[i];
+        delete m_vHistMSProbePt_matched[i];
+        delete m_vHistMSProbeEta_matched[i];
+
+    }
+}
+
+bool TagAndProbe::ActivateBranches(BranchBase* bb, int entry){
+
+    bb->ActivateTagAndProbe(entry);
+    
+    if(bb->RunNumber<=218589) m_isPeriodA = true;
+    else m_isPeriodB = true;
+   
+    return true;
+}
+
+void TagAndProbe::recIDEfficiency(BranchBase* bb, int ipt, int ieta, int icent, int icharge, double ptLow, double ptUpp, double etaLow, double etaUpp, double centLow, double centUpp){
+
+
+    bool doCharge = false;
+    if((icharge==-1)||(icharge==+1)) doCharge = true;
+
+    for(int itag=0; itag<bb->mu_rec_tag_n; ++itag){
+
+        // Number of probes for this tag
+        for(int iprobe=0; iprobe<bb->mu_rec_MSprobe_n->at(itag); ++iprobe){
+            // If considering charge dependence
+            if(doCharge && (bb->mu_rec_MSprobe_charge->at(itag)[iprobe]!=icharge) ) continue;        
+
+            if(        (bb->mu_rec_MSprobe_pt->at(itag)[iprobe]>=ptLow) 
+                    && (bb->mu_rec_MSprobe_pt->at(itag)[iprobe]<ptUpp)
+                    && (bb->mu_rec_MSprobe_eta->at(itag)[iprobe]>=etaLow)
+                    && (bb->mu_rec_MSprobe_eta->at(itag)[iprobe]<etaUpp)
+                    && (bb->centrality>=centLow)
+                    && (bb->centrality<centUpp)
+              ){
+                // Fill probe histos 
+                std::stringstream currentBin;
+                currentBin << "pt" << ipt << "_eta" << ieta << "_centrality" << icent; 
+
+                m_hMSProbePt =  (TH1F*)gDirectory->Get(std::string("hMSProbePt_" +currentBin.str()).c_str());
+                m_hMSProbeEta = (TH1F*)gDirectory->Get(std::string("hMSProbeEta_"+currentBin.str()).c_str());
+
+                m_hMSProbePt->Fill(bb->mu_rec_MSprobe_pt->at(itag)[iprobe]);
+                m_hMSProbeEta->Fill(bb->mu_rec_MSprobe_eta->at(itag)[iprobe]);
+                
+                // Fill matched probe histos
+                if(bb->mu_rec_MSprobe_isMatched->at(itag)[iprobe]){
+
+                    m_hMSProbePt_matched  =  (TH1F*)gDirectory->Get(std::string("hMSProbePt_matched_"+currentBin.str()).c_str());
+                    m_hMSProbeEta_matched =  (TH1F*)gDirectory->Get(std::string("hMSProbeEta_matched_"+currentBin.str()).c_str());
+
+                    m_hMSProbePt_matched->Fill(bb->mu_rec_MSprobe_pt->at(itag)[iprobe]);
+                    m_hMSProbeEta_matched->Fill(bb->mu_rec_MSprobe_eta->at(itag)[iprobe]);
+
+                }
+
+                
+            }//bins
+
+
+        }//iprobe
+
+    }//itag
+
+}
+
+void TagAndProbe::bookHistos(){
+
+            for(int ipt=0; ipt<m_nPtBins; ++ipt){
+                for(int ieta=0; ieta<m_nEtaBins; ++ieta){
+                    for(int icent=0; icent<m_nCentBins; ++icent){
+
+                        std::stringstream currentBin;
+                        currentBin << "pt" << ipt << "_eta" << ieta << "_centrality" << icent; 
+
+                        m_hMSProbePt =  (TH1F*)gDirectory->Get(std::string("hMSProbePt_" +currentBin.str()).c_str());
+                        m_hMSProbeEta = (TH1F*)gDirectory->Get(std::string("hMSProbeEta_"+currentBin.str()).c_str());
+
+                        m_hMSProbePt_matched  =  (TH1F*)gDirectory->Get(std::string("hMSProbePt_matched_"+currentBin.str()).c_str());
+                        m_hMSProbeEta_matched =  (TH1F*)gDirectory->Get(std::string("hMSProbeEta_matched_"+currentBin.str()).c_str());
+                        
+                        m_vHistMSProbePt.push_back(m_hMSProbePt);
+                        m_vHistMSProbePt_matched.push_back(m_hMSProbePt_matched);
+
+                        m_vHistMSProbeEta.push_back(m_hMSProbeEta);
+                        m_vHistMSProbeEta_matched.push_back(m_hMSProbeEta_matched);
+
+                    }
+                }
+            }
+}
+
+void TagAndProbe::writeHistos(TFile* f){
+    bookHistos();
+    f->cd();
+    std::cout << "Histos to write: " << m_vHistMSProbePt.size() << std::endl;
+    for(unsigned int i=0; i<m_vHistMSProbePt.size(); ++i){
+        m_vHistMSProbePt[i]->Write();
+        m_vHistMSProbeEta[i]->Write();
+        m_vHistMSProbePt_matched[i]->Write();
+        m_vHistMSProbeEta_matched[i]->Write();
+        
+
+    }
+}
+
+void TagAndProbe::recMSEfficiency(BranchBase* bb, int ipt, int ieta, int icent, int icharge, double ptLow, double ptUpp, double etaLow, double etaUpp, double centLow, double centUpp){
+
+}
+
+void TagAndProbe::recEfficiency(){
+
+}
+
+void TagAndProbe::trigEfficiency(BranchBase* bb, int ipt, int ieta, int icent, int icharge, double ptLow, double ptUpp, double etaLow, double etaUpp, double centLow, double centUpp){
+
+}

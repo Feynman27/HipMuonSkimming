@@ -1,0 +1,11 @@
+#!/usr/bin/python
+import os,sys
+
+system=os.system
+print "Submitting Period A jobs to the grid..."
+system("sh SubmitHiPMuonD3PDHardProbesPeriodA.sh")
+print "Done."
+
+print "Submitting Period B jobs to the grid..."
+system("sh SubmitHiPMuonD3PDHardProbesPeriodB.sh")
+print "Done."

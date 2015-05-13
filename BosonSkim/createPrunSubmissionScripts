@@ -1,0 +1,11 @@
+#!/usr/bin/python
+import sys,os
+
+system=os.system
+cmdA = "./makeHiPMuonD3PDHardProbes A"
+cmdB = "./makeHiPMuonD3PDHardProbes B"
+system(cmdA)
+system("cat SubmitHiPMuonD3PDHardProbesPeriodA.sh")
+system(cmdB)
+system("cat SubmitHiPMuonD3PDHardProbesPeriodB.sh")
+print "To submit jobs, run './submit_prun'"

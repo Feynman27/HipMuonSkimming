@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE LumiRangeCollection SYSTEM "http://atlas-runquery.cern.ch/LumiRangeCollection.dtd">
+<!--This document is created by GoodRunsListWriter.-->
+<?xml-stylesheet type="text/xsl" href="/atlasdqm/grlview/grl.xsl" title="grlview" ?>
+<LumiRangeCollection>
+<NamedLumiRange>
+<Name>PHYS_StandardGRL_All_Good</Name>
+<Version>2.1</Version>
+<Metadata Name="ARQEquivalentQuery">find run data12_hip.periodAllYear and dq PHYS_StandardGRL_All_Good DEFECTS#DetStatus-v54-pro13-04 g</Metadata>
+<Metadata Name="Query">Period: data12_hip.AllYear; Defect: PHYS_StandardGRL_All_Good; Defect tag: DetStatus-v54-pro13-04</Metadata>
+<Metadata Name="RQTSVNVersion">DQDefects-00-00-33</Metadata>
+<Metadata Name="RunList">210184</Metadata>
+<LumiBlockCollection>
+<Run>210184</Run>
+<LBRange Start="377" End="643"/>
+</LumiBlockCollection>
+</NamedLumiRange>
+</LumiRangeCollection>

@@ -1,0 +1,27 @@
+#CC        = /afs/cern.ch/sw/lcg/external/gcc/4.3.2/x86_64/bin/g++
+#CC        = /usr/bin/g++
+CC        = /cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/x86_64/Gcc/gcc472p1_x86_64_slc6/slc6/x86_64-slc6-gcc47-opt/bin/g++
+CCFLAGS   = -Wall -g  
+INCS      = `root-config --cflags` -I.  
+LIBS      = `root-config --libs` -lTreePlayer -lCintex 
+
+SkimMain.exe : SkimMain.C BranchFillerTool.o Dict.o pPbMinBiasUtil.o
+	$(CC) $(CCFLAGS) $< BranchFillerTool.o Dict.o pPbMinBiasUtil.o -o $@ $(INCS) $(LIBS)
+
+BranchFillerTool : Dict.o pPbMinBiasUtil.o
+	 $(CC) $(CCFLAGS) pPbMinBiasUtil.o Dict.o -o $@ $(INCS) $(LIBS) 
+
+BranchFillerTool.o : BranchFillerTool.C BranchFillerTool.h
+	$(CC) $(CCFLAGS) -c $< $(INCS) $(LIBS)
+
+Dict.o : Dict.cxx
+	$(CC) $(CCFLAGS) -c $< $(INCS) $(LIBS) 
+
+Dict.cxx : BranchFillerTool.h 
+	rootcint -f $@ -c $<+
+
+pPbMinBiasUtil.o : pPbCentrality/Root/pPbMinBiasUtil.cxx pPbCentrality/pPbCentrality/pPbMinBiasUtil.h
+	 $(CC) $(CCFLAGS) -c pPbCentrality/Root/pPbMinBiasUtil.cxx pPbCentrality/pPbCentrality/pPbMinBiasUtil.h $(INCS) $(LIBS)
+
+clean :
+	rm -f Dict.o Dict.cxx Dict.h BranchFillerTool.o pPbMinBiasUtil.o SkimMain.exe skimmed.root 

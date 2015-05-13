@@ -1,0 +1,61 @@
+INSTALLDIR = $(SW_AREA)
+CLEANEXTS = o so d
+
+ROOTLIBS =`root-config --libs`
+ROOTCPPFLAGS =`root-config --cflags`
+
+INSTALL = /usr/bin/install -c
+
+MAIN_BIN = SkimMain.exe
+MAIN_SOURCES=SkimMain.cpp
+
+libStripMuonEvent = libStripMuonEvent.so
+libStripMuonEvent_SOURCES = \
+	pPbCentrality/Root/pPbMinBiasUtil.cxx \
+	GoodLumiEvent.cpp \
+	HeavyIonD3PD.cpp \
+	EventAnalysis.cpp \
+	MuonAnalysis.cpp \
+	#Dict.cxx
+
+include_HEADERS = \
+	pPbCentrality/pPbCentrality/pPbMinBiasUtil.h \
+	GoodLumiEvent.h \
+	HeavyIonD3PD.h \
+	EventAnalysis.h \
+	MuonAnalysis.h \
+
+dictionary_HEADERS = LinkDef.h
+
+CPPFLAGS = \
+	$(ROOTCPPFLAGS) \
+	-I. -O3 -fPIC
+
+LIBSANA = $(ROOTLIBS) -L.
+
+MYEXECUTABLES = $(MAIN_BIN)
+
+all: $(MYEXECUTABLES)
+
+$(MAIN_BIN):$(MAIN_SOURCES) $(libStripMuonEvent)
+	$(CXX) $(CPPFLAGS) -o $@ $^ $(LIBSANA)
+
+$(libStripMuonEvent): $(subst .cpp,.o,$(libStripMuonEvent_SOURCES))
+	$(CXX) $(CPPFLAGS) -shared -fPIC -o $@ $^ $(LIBSANA)
+
+#Dict.o : Dict.cxx
+#	$(CC) $(CCFLAGS) -c $< $(ROOTLIBS)
+
+#Dict.cxx : HeavyIonD3PD.h
+#	rootcint -f $@ -c $<
+
+install: all
+	$(INSTALL) $(MYEXECUTABLES) $(INSTALLDIR)/bin; \
+	$(INSTALL) $(libStripMuonEvent) $(INSTALLDIR)/lib; \
+	$(INSTALL) $(include_HEADERS) $(INSTALLDIR)/include/StripMuonEvent;
+
+clean:
+	for file in $(CLEANEXTS); do rm -f *.$$file; \
+	    done
+
+.PHONY: all clean install
